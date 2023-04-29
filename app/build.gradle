@@ -77,7 +77,6 @@ dependencies {
     // Dagger - Hilt
     implementation 'com.google.dagger:hilt-android:2.45'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     // testing
@@ -87,9 +86,11 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.6.0"
     implementation "ru.gildor.coroutines:kotlin-coroutines-retrofit:1.1.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
 
     // moshi
     implementation "com.squareup.moshi:moshi:1.14.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.14.0"
 }
 
