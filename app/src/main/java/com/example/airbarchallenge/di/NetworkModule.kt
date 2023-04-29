@@ -1,6 +1,7 @@
 package com.example.airbarchallenge.di
 
-import com.example.airbarchallenge.Constants.TIME_OUT_IN_SECONDS
+import com.example.airbarchallenge.BuildConfig
+import com.example.airbarchallenge.utils.Constants.TIME_OUT_IN_SECONDS
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -8,6 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
@@ -27,7 +29,7 @@ object NetworkModule {
         val adapter = Moshi.Builder().add(jsonObjectAdapter).build()
         return Retrofit
             .Builder()
-            .baseUrl("BASE_URL")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(adapter))
             .client(client)
             .build()
@@ -42,9 +44,12 @@ object NetworkModule {
             .addInterceptor(interceptor)
             .connectTimeout(TIME_OUT_IN_SECONDS, TimeUnit.SECONDS)
             .writeTimeout(TIME_OUT_IN_SECONDS, TimeUnit.SECONDS)
-            .readTimeout(TIME_OUT_IN_SECONDS, TimeUnit.SECONDS)
-            .build()
+            .readTimeout(TIME_OUT_IN_SECONDS, TimeUnit.SECONDS).also { client ->
+                if (BuildConfig.DEBUG) {
+                    val loggingInterceptor = HttpLoggingInterceptor()
+                    loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+                    client.addInterceptor(loggingInterceptor)
+                }
+            }.build()
     }
-
-
 }
