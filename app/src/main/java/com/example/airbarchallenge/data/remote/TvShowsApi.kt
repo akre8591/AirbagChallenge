@@ -1,6 +1,6 @@
 package com.example.airbarchallenge.data.remote
 
-import com.example.airbarchallenge.domain.models.TvShow
+import com.example.airbarchallenge.domain.models.Result
 import com.example.airbarchallenge.utils.ResultNetwork
 import com.example.airbarchallenge.utils.getResult
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,7 +19,7 @@ class TvShowsApi @Inject constructor(
         retrofit.create()
     }
 
-    suspend fun getTopRatedShows(): ResultNetwork<List<TvShow>> = withContext(dispatcher) {
+    suspend fun getTopRatedShows(): ResultNetwork<Result> = withContext(dispatcher) {
         return@withContext getResult { endpoints.getTopRatedShows() }
     }
 
