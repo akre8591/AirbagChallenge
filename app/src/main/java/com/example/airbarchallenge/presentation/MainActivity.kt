@@ -3,11 +3,13 @@ package com.example.airbarchallenge.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.airbarchallenge.presentation.ui.theme.AirbarChallengeTheme
@@ -15,8 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: MainViewModel by viewModels { defaultViewModelProviderFactory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getTopRatedShowList()
         setContent {
             AirbarChallengeTheme {
                 // A surface container using the 'background' color from the theme
@@ -24,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    Greeting("Android", viewModel.topRatedShowList)
                 }
             }
         }
@@ -32,7 +38,26 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(name: String, state: State<ListRatedTvShowsState>?, modifier: Modifier = Modifier) {
+    when (val stateValue = state?.value) {
+        is ListRatedTvShowsState.Success -> {
+            print(stateValue.showList)
+
+        }
+
+        is ListRatedTvShowsState.Loading -> {
+            print(stateValue)
+        }
+
+        is ListRatedTvShowsState.Error -> {
+            print(stateValue)
+        }
+
+        else -> {
+            // do nothing
+        }
+    }
+
     Text(
         text = "Hello $name!",
         modifier = modifier
@@ -43,6 +68,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     AirbarChallengeTheme {
-        Greeting("Android")
+        Greeting("Android", null)
     }
 }

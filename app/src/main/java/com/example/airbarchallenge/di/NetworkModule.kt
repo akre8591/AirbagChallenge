@@ -2,6 +2,7 @@ package com.example.airbarchallenge.di
 
 import com.example.airbarchallenge.BuildConfig
 import com.example.airbarchallenge.utils.Constants.TIME_OUT_IN_SECONDS
+import com.example.airbarchallenge.utils.InterceptorTMDB
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -24,13 +25,11 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(
         client: OkHttpClient,
-        jsonObjectAdapter: JsonObjectAdapter
     ): Retrofit {
-        val adapter = Moshi.Builder().add(jsonObjectAdapter).build()
         return Retrofit
             .Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create(adapter))
+            .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()
     }
@@ -52,4 +51,11 @@ object NetworkModule {
                 }
             }.build()
     }
+
+    @Provides
+    @Singleton
+    fun provideInterceptor(): Interceptor {
+        return InterceptorTMDB()
+    }
+
 }

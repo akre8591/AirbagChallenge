@@ -1,18 +1,18 @@
 package com.example.airbarchallenge.data
 
 import com.example.airbarchallenge.data.remote.TvShowsApi
+import com.example.airbarchallenge.di.IoDispatcher
 import com.example.airbarchallenge.domain.repositories.TVShowsRepository
 import com.example.airbarchallenge.utils.ResultNetwork
 import com.example.airbarchallenge.utils.ResultRepository
 import com.example.airbarchallenge.utils.repositoryFlow
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 
 class TVShowsRepositoryImp @Inject constructor(
     private val api: TvShowsApi,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : TVShowsRepository {
 
     override fun getTopRatedShows() = repositoryFlow(dispatcher) {

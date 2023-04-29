@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Result(
     @Json(name = "results")
-    val results: List<TvShow>
+    val results: List<TvShow>?
 )
 
 @JsonClass(generateAdapter = true)
