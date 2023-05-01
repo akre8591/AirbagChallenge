@@ -61,6 +61,7 @@ dependencies {
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -102,10 +103,26 @@ dependencies {
     // coild
     implementation("io.coil-kt:coil-compose:2.0.0")
 
-    //Room components
+    // Room components
     implementation "androidx.room:room-runtime:2.5.1"
     kapt "androidx.room:room-compiler:2.5.1"
     implementation "androidx.room:room-ktx:2.5.1"
+
+    // Local unit test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+    testImplementation "com.google.truth:truth:1.0.1"
+    testImplementation "io.mockk:mockk:1.12.3"
+    testImplementation "androidx.annotation:annotation:1.6.0"
+    testImplementation "org.hamcrest:hamcrest-library:2.2"
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+
+    // Instrumentation
+    implementation "androidx.fragment:fragment:1.5.7"
+    implementation "androidx.fragment:fragment-ktx:1.5.7"
+    debugImplementation "androidx.fragment:fragment-testing:1.5.7"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:2.45"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.44"
+    androidTestImplementation "androidx.arch.core:core-testing:2.2.0"
 
 
 }
