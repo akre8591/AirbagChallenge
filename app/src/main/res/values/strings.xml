@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AirbarChallenge</string>
+    <string name="list_title">TV Shows</string>
+    <string name="error_message">"There was an error"</string>
 </resources>

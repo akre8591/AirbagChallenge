@@ -1,5 +1,6 @@
 package com.example.airbarchallenge.presentation
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +18,13 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val repository: TVShowsRepository
 ) : ViewModel() {
+
+    var screenTitle = mutableStateOf("")
+        private set
+
+    fun setTitle(newScreenTitle: String) {
+        screenTitle.value = newScreenTitle
+    }
 
     private val _topRatedShowList: MutableState<ListRatedTvShowsState> =
         mutableStateOf(ListRatedTvShowsState.Loading)
@@ -43,6 +51,6 @@ class MainViewModel @Inject constructor(
 
 sealed class ListRatedTvShowsState {
     object Loading : ListRatedTvShowsState()
-    data class Success(val showList: List<TvShow>?) : ListRatedTvShowsState()
+    data class Success(val list: List<TvShow>?) : ListRatedTvShowsState()
     object Error : ListRatedTvShowsState()
 }
