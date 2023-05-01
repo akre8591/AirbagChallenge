@@ -9,4 +9,6 @@ interface TVShowsRepository {
 
     fun getTopRatedShows(): Flow<ResultRepository<List<ShowEntity>>>
 
+    fun getShowById(id: Int): Flow<ResultRepository<ShowEntity>>
+
 }

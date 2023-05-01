@@ -1,5 +1,6 @@
 package com.example.airbarchallenge.presentation
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +23,9 @@ class MainViewModel @Inject constructor(
         mutableStateOf(ListRatedTvShowsState.Loading)
     val topRatedShowList: State<ListRatedTvShowsState> = _topRatedShowList
 
+    private val _showEntity: MutableState<SingleShowState> = mutableStateOf(SingleShowState.Loading)
+    val showEntity: State<SingleShowState> = _showEntity
+
     fun getTopRatedShowList() = viewModelScope.launch {
         repository.getTopRatedShows().collectLatest { result ->
             when (result) {
@@ -39,10 +43,34 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+
+    fun getShowById(id: Int) = viewModelScope.launch {
+        repository.getShowById(id).collectLatest { result ->
+            when (result) {
+                is ResultRepository.Success -> {
+                    _showEntity.value = SingleShowState.Success(result.data)
+                }
+
+                is ResultRepository.Progress -> {
+                    _showEntity.value = SingleShowState.Loading
+                }
+
+                is ResultRepository.Error -> {
+                    _showEntity.value = SingleShowState.Error
+                }
+            }
+        }
+    }
 }
 
 sealed class ListRatedTvShowsState {
     object Loading : ListRatedTvShowsState()
     data class Success(val list: List<ShowEntity>?) : ListRatedTvShowsState()
     data class Error(val list: List<ShowEntity>? = null) : ListRatedTvShowsState()
+}
+
+sealed class SingleShowState {
+    object Loading : SingleShowState()
+    data class Success(val show: ShowEntity) : SingleShowState()
+    object Error : SingleShowState()
 }

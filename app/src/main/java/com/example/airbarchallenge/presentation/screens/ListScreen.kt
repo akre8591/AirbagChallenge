@@ -22,7 +22,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -36,6 +35,7 @@ import coil.compose.AsyncImage
 import com.example.airbarchallenge.R
 import com.example.airbarchallenge.data.db.ShowEntity
 import com.example.airbarchallenge.presentation.ListRatedTvShowsState
+import com.example.airbarchallenge.presentation.MainViewModel
 import com.example.airbarchallenge.utils.completeImagePath
 import com.example.airbarchallenge.utils.shimmerBackground
 import kotlin.math.ceil
@@ -44,12 +44,12 @@ import kotlin.math.floor
 @Composable
 fun ListScreen(
     navController: NavHostController,
-    state: State<ListRatedTvShowsState>
+    viewModel: MainViewModel
 ) {
     val context = LocalContext.current
     val errorMessage = stringResource(id = R.string.error_message)
 
-    when (val showItems = state.value) {
+    when (val showItems = viewModel.topRatedShowList.value) {
         is ListRatedTvShowsState.Success -> {
             ListItems(tvShows = showItems.list.orEmpty(), navController = navController)
         }
@@ -98,7 +98,7 @@ fun ListItems(
 @Composable
 fun ItemLayout(
     show: ShowEntity?,
-    index: Int?,
+    id: Int?,
     navController: NavHostController
 ) {
     Card {
@@ -108,12 +108,13 @@ fun ItemLayout(
                 .background(Color.White)
                 .fillMaxWidth()
                 .clickable {
-                    navController.navigate("details/$index")
+                    navController.navigate("details/$id")
                 }
         ) {
             AsyncImage(
                 model = show?.posterPath?.completeImagePath(),
-                placeholder = painterResource(R.drawable.default_photo),
+                placeholder = painterResource(R.drawable.baseline_downloading_24),
+                error = painterResource(R.drawable.baseline_error_24),
                 contentDescription = show?.name.orEmpty(),
                 modifier = Modifier
                     .fillMaxWidth()

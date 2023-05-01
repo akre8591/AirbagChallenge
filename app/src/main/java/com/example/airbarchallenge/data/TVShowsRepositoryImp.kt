@@ -1,5 +1,6 @@
 package com.example.airbarchallenge.data
 
+import com.example.airbarchallenge.data.db.ShowEntity
 import com.example.airbarchallenge.data.db.ShowsDao
 import com.example.airbarchallenge.data.remote.TvShowsApi
 import com.example.airbarchallenge.di.IoDispatcher
@@ -9,6 +10,7 @@ import com.example.airbarchallenge.utils.ResultRepository
 import com.example.airbarchallenge.utils.repositoryFlow
 import com.example.airbarchallenge.utils.toEntity
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
@@ -43,6 +45,15 @@ class TVShowsRepositoryImp @Inject constructor(
                 val localShowsList = showsDao.getAllShows()
                 emit(ResultRepository.Error(Exception(result.error), showEntity = localShowsList))
             }
+        }
+    }
+
+    override fun getShowById(id: Int) = repositoryFlow(dispatcher) {
+        val localShowEntity = showsDao.getShowByID(id)
+        localShowEntity?.let {
+            emit(ResultRepository.Success(localShowEntity))
+        } ?: run {
+            emit(ResultRepository.Error(Exception()))
         }
     }
 }

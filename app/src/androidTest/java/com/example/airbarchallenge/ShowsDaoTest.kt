@@ -7,6 +7,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -81,6 +82,11 @@ class ShowsDaoTest {
         assertEquals(showsDao.getShowByID(0)?.voteAverage, 8.2)
         assertEquals(showsDao.getShowByID(0)?.posterPath, "fake_path")
         assertEquals(showsDao.getShowByID(0)?.overview, "fake_overview")
+    }
+
+    @After
+    fun tearDown() {
+        showsDao.deleteAllShows()
     }
 
 
