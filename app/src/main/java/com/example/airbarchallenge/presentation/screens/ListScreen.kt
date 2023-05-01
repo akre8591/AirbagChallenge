@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,7 @@ import com.example.airbarchallenge.R
 import com.example.airbarchallenge.data.db.ShowEntity
 import com.example.airbarchallenge.presentation.ListRatedTvShowsState
 import com.example.airbarchallenge.presentation.MainViewModel
+import com.example.airbarchallenge.utils.Constants.LIST_ITEMS_TEST_TAG
 import com.example.airbarchallenge.utils.completeImagePath
 import com.example.airbarchallenge.utils.shimmerBackground
 import kotlin.math.ceil
@@ -83,7 +85,8 @@ fun ListItems(
     LazyVerticalGrid(
         modifier = Modifier
             .padding(top = 60.dp)
-            .background(color = Color.LightGray),
+            .background(color = Color.LightGray)
+            .testTag(LIST_ITEMS_TEST_TAG),
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding = PaddingValues(8.dp)
     ) {

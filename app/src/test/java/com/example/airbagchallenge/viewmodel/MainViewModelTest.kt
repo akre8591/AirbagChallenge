@@ -1,6 +1,7 @@
-package com.example.airbagchallenge
+package com.example.airbagchallenge.viewmodel
 
 
+import com.example.airbagchallenge.utils.MainDispatcherRule
 import com.example.airbarchallenge.data.db.ShowEntity
 import com.example.airbarchallenge.domain.repositories.TVShowsRepository
 import com.example.airbarchallenge.presentation.ListRatedTvShowsState

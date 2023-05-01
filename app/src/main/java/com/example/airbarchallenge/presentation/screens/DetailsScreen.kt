@@ -15,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,6 +26,7 @@ import com.example.airbarchallenge.R
 import com.example.airbarchallenge.data.db.ShowEntity
 import com.example.airbarchallenge.presentation.MainViewModel
 import com.example.airbarchallenge.presentation.SingleShowState
+import com.example.airbarchallenge.utils.Constants.DETAILS_TEST_TAG
 import com.example.airbarchallenge.utils.completeImagePath
 import com.example.airbarchallenge.utils.shimmerBackground
 
@@ -69,6 +71,7 @@ fun ShowDetails(showEntity: ShowEntity) {
             .padding(16.dp)
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
+            .testTag(DETAILS_TEST_TAG)
     ) {
         AsyncImage(
             model = showEntity.posterPath?.completeImagePath(),

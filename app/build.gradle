@@ -19,7 +19,7 @@ android {
         buildConfigField("String", "BASE_URL", base_url)
         buildConfigField("String", "IMAGES_PATH", images_path)
 
-        testInstrumentationRunner "com.example.airbarchallenge.CustomTestRunner"
+        testInstrumentationRunner "com.example.airbarchallenge.utils.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -122,6 +122,8 @@ dependencies {
     androidTestImplementation "com.google.dagger:hilt-android-testing:2.45"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.44"
     androidTestImplementation "androidx.arch.core:core-testing:2.2.0"
+    androidTestImplementation "io.mockk:mockk-android:1.12.3"
+    androidTestImplementation "androidx.navigation:navigation-testing:2.5.3"
 
     debugImplementation "androidx.fragment:fragment-testing-manifest:1.6.0-alpha04"
     debugImplementation "androidx.fragment:fragment-testing:1.6.0-alpha04"

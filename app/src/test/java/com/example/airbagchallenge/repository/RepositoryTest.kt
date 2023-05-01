@@ -1,5 +1,6 @@
-package com.example.airbagchallenge
+package com.example.airbagchallenge.repository
 
+import com.example.airbagchallenge.utils.MainDispatcherRule
 import com.example.airbarchallenge.data.TVShowsRepositoryImp
 import com.example.airbarchallenge.data.db.ShowEntity
 import com.example.airbarchallenge.data.db.ShowsDao

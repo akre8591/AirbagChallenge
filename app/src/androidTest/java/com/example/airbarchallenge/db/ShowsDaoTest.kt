@@ -1,4 +1,4 @@
-package com.example.airbarchallenge
+package com.example.airbarchallenge.db
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.airbarchallenge.data.db.ShowEntity

@@ -1,4 +1,4 @@
-package com.example.airbarchallenge
+package com.example.airbarchallenge.utils
 
 import android.content.ComponentName
 import android.content.Intent

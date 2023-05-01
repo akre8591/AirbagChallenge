@@ -1,4 +1,4 @@
-package com.example.airbagchallenge
+package com.example.airbagchallenge.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
