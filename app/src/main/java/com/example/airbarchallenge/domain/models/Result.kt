@@ -22,5 +22,8 @@ data class TvShow(
     val voteAverage: Double?,
 
     @Json(name = "poster_path")
-    val posterPath: String?
+    val posterPath: String?,
+
+    @Json(name = "overview")
+    val overview: String?
 )

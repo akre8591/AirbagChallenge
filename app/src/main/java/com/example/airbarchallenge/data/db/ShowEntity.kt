@@ -9,6 +9,7 @@ data class ShowEntity(
     val id: Int,
     val name: String?,
     val voteAverage: Double?,
-    val posterPath: String?
+    val posterPath: String?,
+    val overview: String?
 )
 

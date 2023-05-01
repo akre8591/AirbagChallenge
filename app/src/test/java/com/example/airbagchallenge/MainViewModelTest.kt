@@ -25,8 +25,8 @@ class MainViewModelTest {
     private val repository = mockk<TVShowsRepository>(relaxed = true)
     private val localTvShowList =
         listOf(
-            ShowEntity(0, "test", 8.2, "fake_path"),
-            ShowEntity(1, "test", 9.2, "fake_path")
+            ShowEntity(0, "test", 8.2, "fake_path", "fake_overview"),
+            ShowEntity(1, "test", 9.2, "fake_path", "fake_overview")
         )
 
     @Before

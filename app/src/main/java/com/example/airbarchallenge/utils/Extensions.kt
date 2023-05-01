@@ -50,5 +50,6 @@ fun TvShow.toEntity() = ShowEntity(
     id = id ?: 0,
     name = name,
     voteAverage = voteAverage,
-    posterPath = posterPath
+    posterPath = posterPath,
+    overview = overview
 )

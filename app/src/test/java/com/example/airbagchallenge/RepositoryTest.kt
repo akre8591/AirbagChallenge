@@ -35,14 +35,14 @@ class RepositoryTest {
     private val resultResponse =
         Result(
             listOf(
-                TvShow(0, "test", 8.2, "fake_path"),
-                TvShow(1, "test", 9.2, "fake_path")
+                TvShow(0, "test", 8.2, "fake_path", "fake_overview"),
+                TvShow(1, "test", 9.2, "fake_path", "fake_overview")
             )
         )
     private val localTvShowList =
         listOf(
-            ShowEntity(0, "test", 8.2, "fake_path"),
-            ShowEntity(1, "test", 9.2, "fake_path")
+            ShowEntity(0, "test", 8.2, "fake_path", "fake_overview"),
+            ShowEntity(1, "test", 9.2, "fake_path", "fake_overview")
         )
 
     @Before

@@ -36,8 +36,8 @@ class ShowsDaoTest {
         assert(showsDao.getAllShows().isEmpty())
 
         val showList = listOf(
-            ShowEntity(0, "name_test", 8.2, "fake_path"),
-            ShowEntity(1, "name_test", 9.2, "fake_path")
+            ShowEntity(0, "name_test", 8.2, "fake_path", "fake_overview"),
+            ShowEntity(1, "name_test", 9.2, "fake_path", "fake_overview")
         )
 
         showsDao.insertAllShows(showList)
@@ -51,8 +51,8 @@ class ShowsDaoTest {
         assert(showsDao.getAllShows().isEmpty())
 
         val showList = listOf(
-            ShowEntity(0, "name_test", 8.2, "fake_path"),
-            ShowEntity(1, "name_test", 9.2, "fake_path")
+            ShowEntity(0, "name_test", 8.2, "fake_path", "fake_overview"),
+            ShowEntity(1, "name_test", 9.2, "fake_path", "fake_overview")
         )
 
         showsDao.insertAllShows(showList)
@@ -70,8 +70,8 @@ class ShowsDaoTest {
         assert(showsDao.getAllShows().isEmpty())
 
         val showList = listOf(
-            ShowEntity(0, "name_test", 8.2, "fake_path"),
-            ShowEntity(1, "name_test", 9.2, "fake_path")
+            ShowEntity(0, "name_test", 8.2, "fake_path", "fake_overview"),
+            ShowEntity(1, "name_test", 9.2, "fake_path", "fake_overview")
         )
 
         showsDao.insertAllShows(showList)
@@ -80,7 +80,7 @@ class ShowsDaoTest {
         assertEquals(showsDao.getShowByID(0)?.name, "name_test")
         assertEquals(showsDao.getShowByID(0)?.voteAverage, 8.2)
         assertEquals(showsDao.getShowByID(0)?.posterPath, "fake_path")
-        
+        assertEquals(showsDao.getShowByID(0)?.overview, "fake_overview")
     }
 
 
