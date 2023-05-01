@@ -12,6 +12,7 @@ import com.example.airbarchallenge.utils.TMDBError
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -204,6 +205,60 @@ class RepositoryTest {
 
                 is ResultRepository.Error -> {
                     assertEquals(tvShowItemsExpected, result.showEntity?.size)
+                }
+            }
+        }
+    }
+
+    @Test
+    fun getShowByIdSuccess() = runTest {
+
+        val tvShowExpected = ShowEntity(1, "name", 9.2, "fake_path", "fake_overview")
+
+        coEvery {
+            daoMock.getShowByID(any())
+        } returns tvShowExpected
+
+        tvShowsRepository.getShowById(1).collectLatest { result ->
+            when (result) {
+                is ResultRepository.Success -> {
+                    assertEquals(tvShowExpected.id, result.data.id)
+                    assertEquals(tvShowExpected.name, result.data.name)
+                    assertEquals(tvShowExpected.voteAverage, result.data.voteAverage)
+                    assertEquals(tvShowExpected.posterPath, result.data.posterPath)
+                    assertEquals(tvShowExpected.overview, result.data.overview)
+                }
+
+                is ResultRepository.Progress -> {
+                    assertEquals(true, result.isLoading)
+                }
+
+                is ResultRepository.Error -> {
+                    // invalid scenario
+                }
+            }
+        }
+    }
+
+    @Test
+    fun getShowByIdError() = runTest {
+
+        coEvery {
+            daoMock.getShowByID(any())
+        } returns null
+
+        tvShowsRepository.getShowById(1).collectLatest { result ->
+            when (result) {
+                is ResultRepository.Success -> {
+                    // invalid scenario
+                }
+
+                is ResultRepository.Progress -> {
+                    assertEquals(true, result.isLoading)
+                }
+
+                is ResultRepository.Error -> {
+                   assertNotNull(result.error)
                 }
             }
         }

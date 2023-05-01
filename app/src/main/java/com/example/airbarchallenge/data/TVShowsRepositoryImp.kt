@@ -1,6 +1,5 @@
 package com.example.airbarchallenge.data
 
-import com.example.airbarchallenge.data.db.ShowEntity
 import com.example.airbarchallenge.data.db.ShowsDao
 import com.example.airbarchallenge.data.remote.TvShowsApi
 import com.example.airbarchallenge.di.IoDispatcher
@@ -10,7 +9,6 @@ import com.example.airbarchallenge.utils.ResultRepository
 import com.example.airbarchallenge.utils.repositoryFlow
 import com.example.airbarchallenge.utils.toEntity
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
