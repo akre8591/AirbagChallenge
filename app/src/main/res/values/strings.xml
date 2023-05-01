@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">AirbarChallenge</string>
     <string name="list_title">TV Shows</string>
+    <string name="details_title">Details</string>
     <string name="error_message">"There was an error"</string>
+    <string name="sad_face_icon">Sad Face Icon</string>
+    <string name="empty_content">No Tasks Found.</string>
 </resources>

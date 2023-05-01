@@ -1,7 +1,6 @@
 package com.example.airbarchallenge.presentation.screens
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,11 +10,16 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,16 +27,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import com.example.airbarchallenge.R
 import com.example.airbarchallenge.domain.models.TvShow
 import com.example.airbarchallenge.presentation.ListRatedTvShowsState
 import com.example.airbarchallenge.presentation.MainViewModel
+import com.example.airbarchallenge.utils.completeImagePath
 import com.example.airbarchallenge.utils.shimmerBackground
+import kotlin.math.ceil
+import kotlin.math.floor
 
 @Composable
 fun ListScreen(
@@ -43,14 +51,14 @@ fun ListScreen(
     val screenTitle = stringResource(id = R.string.list_title)
     val errorMessage = stringResource(id = R.string.error_message)
 
-    LaunchedEffect(Unit) {
-        viewModel.setTitle(screenTitle)
-    }
 
     when (val showsItems = viewModel.topRatedShowList.value) {
         is ListRatedTvShowsState.Success -> {
             val tvShows = showsItems.list ?: emptyList()
             LazyVerticalGrid(
+                modifier = Modifier
+                    .padding(top = 60.dp)
+                    .background(color = Color.LightGray),
                 columns = GridCells.Adaptive(minSize = 140.dp),
                 contentPadding = PaddingValues(8.dp)
             ) {
@@ -73,6 +81,7 @@ fun ListScreen(
 
         is ListRatedTvShowsState.Error -> {
             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+            EmptyContent()
         }
     }
 }
@@ -83,27 +92,74 @@ fun ItemLayout(
     index: Int?,
     navController: NavHostController
 ) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .background(Color.DarkGray)
-            .fillMaxWidth()
-            .clickable {
-                navController.navigate("details/$index")
+    Card {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .background(Color.White)
+                .fillMaxWidth()
+                .clickable {
+                    navController.navigate("details/$index")
+                }
+        ) {
+            AsyncImage(
+                model = show?.posterPath?.completeImagePath(),
+                placeholder = painterResource(R.drawable.default_photo),
+                contentDescription = show?.name.orEmpty(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                contentScale = ContentScale.Crop
+            )
+            Text(
+                text = show?.name.orEmpty(),
+                color = Color.Black,
+                fontSize = 14.sp,
+
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
+                    .height(20.dp)
+            )
+            Row() {
+                RatingBar(
+                    modifier = Modifier
+                        .padding(8.dp), rating = show?.voteAverage?.div(2) ?: 0.0
+                )
+                Text(text = show?.voteAverage.toString(), modifier = Modifier.padding(8.dp))
             }
-    ) {
-        Image(
-            painter = rememberAsyncImagePainter(model = show?.posterPath),
-            contentDescription = show?.name.orEmpty(),
-            modifier = Modifier.fillMaxWidth(),
-            contentScale = ContentScale.Crop
-        )
-        Text(
-            text = show?.name.orEmpty(),
-            color = Color.White,
-            fontSize = 14.sp,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)
-        )
+        }
     }
 }
+
+@Composable
+fun RatingBar(
+    modifier: Modifier = Modifier,
+    rating: Double = 0.0,
+    stars: Int = 5,
+    starsColor: Color = Color.Yellow,
+) {
+    val filledStars = floor(rating).toInt()
+    val unfilledStars = (stars - ceil(rating)).toInt()
+    val halfStar = !(rating.rem(1).equals(0.0))
+    Row(modifier = modifier) {
+        repeat(filledStars) {
+            Icon(imageVector = Icons.Outlined.Star, contentDescription = null, tint = starsColor)
+        }
+        if (halfStar) {
+            Icon(
+                painter = painterResource(id = R.drawable.outline_star_half_24),
+                contentDescription = null,
+                tint = starsColor
+            )
+        }
+        repeat(unfilledStars) {
+            Icon(
+                painter = painterResource(id = R.drawable.outline_star_outline_24),
+                contentDescription = null,
+                tint = starsColor
+            )
+        }
+    }
+}
+
 

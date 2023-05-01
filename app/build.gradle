@@ -17,6 +17,7 @@ android {
         versionName "1.0"
         buildConfigField("String", "API_KEY", api_key)
         buildConfigField("String", "BASE_URL", base_url)
+        buildConfigField("String", "IMAGES_PATH", images_path)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

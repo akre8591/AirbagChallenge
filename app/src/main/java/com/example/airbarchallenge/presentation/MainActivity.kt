@@ -19,12 +19,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.airbarchallenge.R
 import com.example.airbarchallenge.presentation.screens.DetailsScreen
 import com.example.airbarchallenge.presentation.screens.ListScreen
 import com.example.airbarchallenge.presentation.ui.theme.Purple40
+import com.example.airbarchallenge.utils.Constants.DETAILS_SCREEN
+import com.example.airbarchallenge.utils.Constants.LIST_ID_PARAM
+import com.example.airbarchallenge.utils.Constants.LIST_SCREEN
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -72,22 +77,24 @@ fun TopRatedListScreen(viewModel: MainViewModel) {
         topBar = {
             navigationIcon?.let {
                 TopAppBar(
-                    title = { Text(viewModel.screenTitle.value) },
+                    title = { Text(stringResource(id = R.string.details_title)) },
                     navigationIcon = it,
                     colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Purple40)
                 )
             } ?: run {
                 TopAppBar(
-                    title = { Text(viewModel.screenTitle.value) },
+                    title = { Text(stringResource(id = R.string.list_title)) },
                     colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Purple40)
                 )
             }
         },
         content = {
-            NavHost(navController = navController, startDestination = "home") {
-                composable("home") { ListScreen(navController, viewModel) }
-                composable("details/{listId}") { backStackEntry ->
-                    backStackEntry.arguments?.getString("listId")
+            NavHost(navController = navController, startDestination = LIST_SCREEN) {
+                composable(LIST_SCREEN) {
+                    ListScreen(navController, viewModel)
+                }
+                composable(DETAILS_SCREEN) { backStackEntry ->
+                    backStackEntry.arguments?.getString(LIST_ID_PARAM)
                         ?.let { DetailsScreen(it, navController, viewModel) }
                 }
             }

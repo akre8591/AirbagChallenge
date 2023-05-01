@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.TileMode
+import com.example.airbarchallenge.BuildConfig
 
 fun Modifier.shimmerBackground(shape: Shape = RectangleShape): Modifier = composed {
     val transition = rememberInfiniteTransition()
@@ -40,3 +41,5 @@ fun Modifier.shimmerBackground(shape: Shape = RectangleShape): Modifier = compos
     )
     return@composed this.then(background(brush, shape))
 }
+
+fun String.completeImagePath() = BuildConfig.IMAGES_PATH + this
