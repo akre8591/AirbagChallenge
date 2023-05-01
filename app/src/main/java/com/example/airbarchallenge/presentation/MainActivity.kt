@@ -91,11 +91,11 @@ fun TopRatedListScreen(viewModel: MainViewModel) {
         content = {
             NavHost(navController = navController, startDestination = LIST_SCREEN) {
                 composable(LIST_SCREEN) {
-                    ListScreen(navController, viewModel)
+                    ListScreen(navController, viewModel.topRatedShowList)
                 }
                 composable(DETAILS_SCREEN) { backStackEntry ->
                     backStackEntry.arguments?.getString(LIST_ID_PARAM)
-                        ?.let { DetailsScreen(it, navController, viewModel) }
+                        ?.let { DetailsScreen(it, navController, viewModel.topRatedShowList) }
                 }
             }
         }

@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.TileMode
 import com.example.airbarchallenge.BuildConfig
+import com.example.airbarchallenge.data.db.ShowEntity
+import com.example.airbarchallenge.domain.models.TvShow
 
 fun Modifier.shimmerBackground(shape: Shape = RectangleShape): Modifier = composed {
     val transition = rememberInfiniteTransition()
@@ -43,3 +45,10 @@ fun Modifier.shimmerBackground(shape: Shape = RectangleShape): Modifier = compos
 }
 
 fun String.completeImagePath() = BuildConfig.IMAGES_PATH + this
+
+fun TvShow.toEntity() = ShowEntity(
+    id = id ?: 0,
+    name = name,
+    voteAverage = voteAverage,
+    posterPath = posterPath
+)

@@ -22,7 +22,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -34,9 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.airbarchallenge.R
-import com.example.airbarchallenge.domain.models.TvShow
+import com.example.airbarchallenge.data.db.ShowEntity
 import com.example.airbarchallenge.presentation.ListRatedTvShowsState
-import com.example.airbarchallenge.presentation.MainViewModel
 import com.example.airbarchallenge.utils.completeImagePath
 import com.example.airbarchallenge.utils.shimmerBackground
 import kotlin.math.ceil
@@ -45,29 +44,14 @@ import kotlin.math.floor
 @Composable
 fun ListScreen(
     navController: NavHostController,
-    viewModel: MainViewModel
+    state: State<ListRatedTvShowsState>
 ) {
     val context = LocalContext.current
-    val screenTitle = stringResource(id = R.string.list_title)
     val errorMessage = stringResource(id = R.string.error_message)
 
-
-    when (val showsItems = viewModel.topRatedShowList.value) {
+    when (val showItems = state.value) {
         is ListRatedTvShowsState.Success -> {
-            val tvShows = showsItems.list ?: emptyList()
-            LazyVerticalGrid(
-                modifier = Modifier
-                    .padding(top = 60.dp)
-                    .background(color = Color.LightGray),
-                columns = GridCells.Adaptive(minSize = 140.dp),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                items(tvShows) { tvShows ->
-                    Row(Modifier.padding(8.dp)) {
-                        ItemLayout(tvShows, tvShows.id, navController)
-                    }
-                }
-            }
+            ListItems(tvShows = showItems.list.orEmpty(), navController = navController)
         }
 
         is ListRatedTvShowsState.Loading -> {
@@ -81,14 +65,39 @@ fun ListScreen(
 
         is ListRatedTvShowsState.Error -> {
             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-            EmptyContent()
+            if (showItems.list.isNullOrEmpty()) {
+                EmptyContent()
+            } else {
+                ListItems(tvShows = showItems.list, navController = navController)
+            }
+
+        }
+    }
+}
+
+@Composable
+fun ListItems(
+    tvShows: List<ShowEntity>,
+    navController: NavHostController
+) {
+    LazyVerticalGrid(
+        modifier = Modifier
+            .padding(top = 60.dp)
+            .background(color = Color.LightGray),
+        columns = GridCells.Adaptive(minSize = 140.dp),
+        contentPadding = PaddingValues(8.dp)
+    ) {
+        items(tvShows) { tvShows ->
+            Row(Modifier.padding(8.dp)) {
+                ItemLayout(tvShows, tvShows.id, navController)
+            }
         }
     }
 }
 
 @Composable
 fun ItemLayout(
-    show: TvShow?,
+    show: ShowEntity?,
     index: Int?,
     navController: NavHostController
 ) {
@@ -123,9 +132,10 @@ fun ItemLayout(
             Row() {
                 RatingBar(
                     modifier = Modifier
-                        .padding(8.dp), rating = show?.voteAverage?.div(2) ?: 0.0
+                        .padding(4.dp),
+                    rating = show?.voteAverage?.div(2) ?: 0.0
                 )
-                Text(text = show?.voteAverage.toString(), modifier = Modifier.padding(8.dp))
+                Text(text = show?.voteAverage.toString(), modifier = Modifier.padding(4.dp))
             }
         }
     }

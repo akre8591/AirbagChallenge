@@ -1,5 +1,6 @@
 package com.example.airbarchallenge.utils
 
+import com.example.airbarchallenge.data.db.ShowEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
@@ -13,7 +14,8 @@ sealed class ResultRepository<out T> {
     data class Error(
         val error: Exception,
         val httpErrorCode: Int? = null,
-        val message: String? = null
+        val message: String? = null,
+        val showEntity: List<ShowEntity>? = null
     ) : ResultRepository<Nothing>()
 
 }

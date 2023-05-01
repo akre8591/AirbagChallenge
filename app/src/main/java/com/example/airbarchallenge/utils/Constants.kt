@@ -7,5 +7,6 @@ object Constants {
     const val LIST_SCREEN = "home"
     const val DETAILS_SCREEN = "details/{listId}"
     const val LIST_ID_PARAM = "listId"
+    const val DATA_BASE_NAME = "shows_database"
 
 }

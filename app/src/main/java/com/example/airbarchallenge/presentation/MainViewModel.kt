@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.airbarchallenge.domain.models.TvShow
+import com.example.airbarchallenge.data.db.ShowEntity
 import com.example.airbarchallenge.domain.repositories.TVShowsRepository
 import com.example.airbarchallenge.utils.ResultRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(
         repository.getTopRatedShows().collectLatest { result ->
             when (result) {
                 is ResultRepository.Success -> {
-                    _topRatedShowList.value = ListRatedTvShowsState.Success(result.data.results)
+                    _topRatedShowList.value = ListRatedTvShowsState.Success(result.data)
                 }
 
                 is ResultRepository.Progress -> {
@@ -34,7 +34,7 @@ class MainViewModel @Inject constructor(
                 }
 
                 is ResultRepository.Error -> {
-                    _topRatedShowList.value = ListRatedTvShowsState.Error
+                    _topRatedShowList.value = ListRatedTvShowsState.Error(result.showEntity)
                 }
             }
         }
@@ -43,6 +43,6 @@ class MainViewModel @Inject constructor(
 
 sealed class ListRatedTvShowsState {
     object Loading : ListRatedTvShowsState()
-    data class Success(val list: List<TvShow>?) : ListRatedTvShowsState()
-    object Error : ListRatedTvShowsState()
+    data class Success(val list: List<ShowEntity>?) : ListRatedTvShowsState()
+    data class Error(val list: List<ShowEntity>? = null) : ListRatedTvShowsState()
 }
