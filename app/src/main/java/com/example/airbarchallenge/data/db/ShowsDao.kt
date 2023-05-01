@@ -22,4 +22,10 @@ interface ShowsDao {
     @Query("SELECT * FROM ShowEntity")
     fun getAllShows(): List<ShowEntity>
 
+    @Query("SELECT * FROM ShowEntity WHERE id=:id")
+    fun getShowByID(id: Int): ShowEntity?
+
+    @Query("DELETE FROM ShowEntity")
+    fun deleteAllShows()
+
 }
