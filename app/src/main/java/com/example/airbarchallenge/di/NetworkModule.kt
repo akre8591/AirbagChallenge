@@ -3,7 +3,6 @@ package com.example.airbarchallenge.di
 import com.example.airbarchallenge.BuildConfig
 import com.example.airbarchallenge.utils.Constants.TIME_OUT_IN_SECONDS
 import com.example.airbarchallenge.utils.InterceptorTMDB
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

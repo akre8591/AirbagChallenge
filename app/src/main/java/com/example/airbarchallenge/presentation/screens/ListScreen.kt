@@ -53,7 +53,10 @@ fun ListScreen(
 
     when (val showItems = viewModel.topRatedShowList.value) {
         is ListRatedTvShowsState.Success -> {
-            ListItems(tvShows = showItems.list.orEmpty(), navController = navController)
+            ListItems(
+                tvShows = showItems.list.orEmpty(),
+                navController = navController
+            )
         }
 
         is ListRatedTvShowsState.Loading -> {
@@ -70,7 +73,10 @@ fun ListScreen(
             if (showItems.list.isNullOrEmpty()) {
                 EmptyContent()
             } else {
-                ListItems(tvShows = showItems.list, navController = navController)
+                ListItems(
+                    tvShows = showItems.list,
+                    navController = navController
+                )
             }
 
         }
@@ -92,7 +98,11 @@ fun ListItems(
     ) {
         items(tvShows) { tvShows ->
             Row(Modifier.padding(8.dp)) {
-                ItemLayout(tvShows, tvShows.id, navController)
+                ItemLayout(
+                    show = tvShows,
+                    id = tvShows.id,
+                    navController = navController
+                )
             }
         }
     }

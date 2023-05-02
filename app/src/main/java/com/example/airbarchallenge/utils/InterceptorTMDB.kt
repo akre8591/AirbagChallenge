@@ -10,8 +10,10 @@ class InterceptorTMDB : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request().newBuilder()
         val originalUrl = chain.request().url
-        val url =
-            originalUrl.newBuilder().addQueryParameter(API_QUERY_PARAM, BuildConfig.API_KEY).build()
+        val url = originalUrl
+            .newBuilder()
+            .addQueryParameter(API_QUERY_PARAM, BuildConfig.API_KEY)
+            .build()
         request.url(url)
         return chain.proceed(request.build())
     }

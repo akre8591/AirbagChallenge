@@ -64,7 +64,6 @@ fun DetailsScreen(
             EmptyContent()
         }
     }
-
 }
 
 @Composable
