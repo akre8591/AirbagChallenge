@@ -2,4 +2,12 @@
 <resources>
 
     <style name="Theme.AirbarChallenge" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.AirbarChallenge.Starting" parent="Theme.AirbarChallenge">
+        <item name="windowSplashScreenBackground">#000000</item>
+        <item name="windowSplashScreenIconBackgroundColor">@drawable/tmdb</item>
+        <item name="windowSplashScreenAnimationDuration">500</item>
+        <item name="postSplashScreenTheme">@style/Theme.AirbarChallenge</item>
+    </style>
+
 </resources>
